@@ -1,36 +1,29 @@
-let display = document.getElementById('display');
-let buttons = document.querySelectorAll('.keys button');
+let input = document.getElementById('call');
+let buttons = document.querySelectorAll('button');
 
-buttons.forEach(button => {
-  button.addEventListener('click', () => {
-    let value = button.textContent.trim();
-    if (value === 'C') {
-      clearDisplay();
-    } else if (value === '(') {
-      value = '*(';
-      appendToDisplay(value);
-    } else {
-      appendToDisplay(value);
+let string = "";
+let arr = Array.from(buttons);
+arr.forEach(button => {
+  button.addEventListener ('click', (e) =>{
+    if(e.target.innerHTML == '='){
+      string = eval(string);
+      input.value = string;
     }
-  });
-});
 
-function appendToDisplay(value) {
-  display.value += value;
-}
+    else if(e.target.innerHTML == 'AC'){
+      string = "";
+      input.value = string;
+    }
 
-function clearDisplay() {
-  display.value = '';
-}
-function backspace() {
-  let currentValue = display.value;
-  display.value = currentValue.slice(0, -1);
-}
+    else if(e.target.innerHTML == 'Del'){
+      string = string.substring(0, string.length-1);
+      input.value = string;
+    }
+    else{
+      string += e.target.innerHTML;
+      input.value = string;
+    }
 
-function calculateResult() {
-  try {
-    display.value = eval(display.value);
-  } catch (error) {
-    display.value = 'Error';
-  }
-}
+  })
+})
+
